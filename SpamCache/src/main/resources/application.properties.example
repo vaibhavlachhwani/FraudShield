@@ -1,0 +1,4 @@
+spring.application.name=SpamCache
+
+spam.delta.min = #min_spam_threshold
+spam.delta.max = #max_spam_threshold
