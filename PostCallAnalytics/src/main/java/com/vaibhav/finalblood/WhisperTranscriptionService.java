@@ -8,7 +8,7 @@ import java.util.Collections;
 
 public class WhisperTranscriptionService {
     private static final String API_URL = "https://api-inference.huggingface.co/models/openai/whisper-large-v3-turbo";
-    private static final String API_KEY = "key"; // Replace with your actual key
+    private static final String API_KEY = ""; // Replace with your actual key
 
     public String transcribe(String filePath) {
         try {
