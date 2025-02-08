@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Audio Transcription with Spam Detection</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      width: 80%;
+      max-width: 600px;
+      padding: 20px;
+      background: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      text-align: center;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #006953;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #005245;
+    }
+    #transcription {
+      margin-top: 20px;
+      padding: 10px;
+      background: #e0ded7;
+      border-radius: 5px;
+      height: 100px;
+      overflow-y: auto;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Live Audio Transcription with Spam Detection</h1>
+    <button id="start-btn">Start Transcription</button>
+    <div id="transcription">Transcription will appear here...</div>
+    <div id="result">Prediction result will appear here...</div>
+  </div>
+
+  <script>
+    const startBtn = document.getElementById('start-btn');
+    const transcriptionDiv = document.getElementById('transcription');
+    const resultDiv = document.getElementById('result');
+    
+    let recognition;
+    
+    if ('webkitSpeechRecognition' in window) {
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+      recognition.lang = 'en-US';
+      
+      recognition.onresult = (event) => {
+        let transcript = '';
+        for (let i = event.resultIndex; i < event.results.length; i++) {
+          transcript += event.results[i][0].transcript;
+        }
+        transcriptionDiv.textContent = transcript;
+        checkSpam(transcript); // Call the function to check for spam
+      };
+      
+      recognition.onerror = (event) => {
+        console.error('Error occurred in recognition:', event.error);
+      };
+    } else {
+      alert('Web Speech API is not supported in this browser.');
+    }
+
+    startBtn.addEventListener('click', () => {
+      if (recognition) {
+        recognition.start();
+        startBtn.textContent = 'Transcribing... (Click to restart)';
+      }
+    });
+
+    async function checkSpam(text) {
+      try {
+        const response = await fetch('https://shreyankisiri-callshackathon.hf.space/predict', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: text })
+        });
+
+        const data = await response.json();
+        resultDiv.textContent = `Prediction: ${data.prediction}`;
+      } catch (error) {
+        console.error('Error checking spam:', error);
+        resultDiv.textContent = 'Error checking spam.';
+      }
+    }
+  </script>
+</body>
+</html>
