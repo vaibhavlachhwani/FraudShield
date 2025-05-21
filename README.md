@@ -8,7 +8,7 @@
 ## 🚀 **Features**
 ### 📱 **Frontend (Mobile App)**  
 - **Cross-Platform**: Built with **Flutter**, available on **iOS** and **Android**.  
-- **Modern UI**: Responsive design following **Material Design principles**.  
+- **Modern UI**: Responsive design following **Material Design principles** using Figma.  
 - **Dashboard**: Access recent activity, quick actions, and search contacts.  
 - **Community Alerts**: Stay updated on recent scams in your area.  
 - **Emergency SOS**: Immediate access to emergency contacts with an SOS button.  
