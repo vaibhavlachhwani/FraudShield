@@ -134,6 +134,3 @@ We welcome contributions! Feel free to submit issues or pull requests.
 4. Push the branch and submit a pull request.
 
 ---
-
-## 📞 **Contact**
-For questions or support, reach out at **[mehakverma2026@gmail.com](mailto:mehakverma2026@gmail.com)**.  
